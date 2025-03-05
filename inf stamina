@@ -1,0 +1,21 @@
+local replicated_storage = game:GetService("ReplicatedStorage");
+
+local packages = replicated_storage:FindFirstChild("Packages");
+local knit_module = packages:FindFirstChild("Knit");
+local services = knit_module:FindFirstChild("Services");
+
+local local_player = game:GetService("Players").LocalPlayer;
+local player_stats = local_player.PlayerStats;
+
+local inf_stamina_method = "remote"; -- remote or playerstats
+
+while task.wait() do
+    local decrease_stamina = services:FindFirstChild("StaminaService").RE.DecreaseStamina;
+    local stamina_instance = player_stats.Stamina;
+
+    if inf_stamina_method == "remote" then
+        decrease_stamina:FireServer(math.sqrt(-1)) -- nan, dont set this to zero you will get kicked
+    elseif inf_stamina_method == "playerstats" then
+        stamina_instance.Value = 99
+    end;
+end;
